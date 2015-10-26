@@ -114,14 +114,6 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 							MakeScreenshot($dirTemp, "png")
 						EndIf
 					 EndIf
-               Case $exportMenuItem
-                    copySettingsToClip()
-                Case $importMenuItem
-                    If $RunState Then
-                       MsgBox($MB_SYSTEMMODAL, "Info", "Please stop the bot before importing settings.")
-                    else
-                       importSettingsFromClip()
-                    EndIf
 			EndSwitch
 		Case 274
 			Switch $wParam

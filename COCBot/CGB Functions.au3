@@ -63,8 +63,11 @@
 #include "functions\Image Search\checkTownhall.au3"
 #include "functions\Image Search\checkWall.au3"
 ;#include "functions\Image Search\checkDElixS.au3"
-#include "functions\Image Search\CheckTombs.au3"
+;#include "functions\Image Search\CheckTombs.au3"	; MrPhu's modify
 #include "functions\Image Search\checkDefense.au3"
+#include "functions\Image Search\ClearObstacles.au3"	; MrPhu's modify
+#include "functions\Image Search\BetterWallFind.au3"	; MrPhu's modify
+
 
 #include "functions\Main Screen\checkMainScreen.au3"
 #include "functions\Main Screen\checkObstacles.au3"
@@ -119,6 +122,7 @@
 #include "functions\Pixels\_MultiPixelSearch.au3"
 #include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
+#include "functions\Pixels\isInsideBigDiamond.au3" ; MrPhu's modify
 
 #include "functions\Read Text\BuildingInfo.au3"
 #include "functions\Read Text\getChar.au3"

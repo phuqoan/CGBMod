@@ -83,7 +83,6 @@ Func DEDropSmartSpell()
 
 	While $numSpells > 0 and $aDarkDrills[0][3] <> -1 and $spellAdjust <> -1
 
-
 		If ($searchDark < Number($itxtMinDark)) Then
         SetLog ("Dark Elixir Is below minimum Value")
         Return
@@ -182,7 +181,7 @@ Func DEDropSmartSpell()
 			If ($testX > $error or $testY > $error) and ($testX <> -1 or $testY <> -1) Then
 				For $i = 0 To UBound($aDarkDrills) - 1
 					$aDarkDrills[0][$i] = -1
-					$numDrills += 1
+					;$numDrills += 1	; MrPhu's modify
 				Next
 				SetLog("Removing drill since it wasn't found.", $COLOR_PURPLE)
 			EndIf

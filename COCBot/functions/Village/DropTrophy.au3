@@ -62,7 +62,7 @@ Func DropTrophy()
 							If checkDeadBase() Then
 								; _BlockInputEx(0, "", "", $HWnD) ; block all keyboard keys
 								SetLog(_PadStringCenter(" Dead Base Found!! ", 50, "~"), $COLOR_GREEN)
-								Attack()
+								algorithm_AllTroops()	; MrPhu's modify
 								ReturnHome($TakeLootSnapShot)
 								$ReStart = True  ; Set restart flag after dead base attack to ensure troops are trained
 								ExitLoop ; or Return, Will end function, no troops left to drop Trophies, will need to Train new Troops first

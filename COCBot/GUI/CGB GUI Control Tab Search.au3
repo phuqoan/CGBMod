@@ -257,15 +257,15 @@ Func hidenormal()
 
 EndFunc
 
-Func chkABEnableAfterHero()
-	If GUICtrlRead($chkABEnableAfterHero) = $GUI_CHECKED Then
-		_GUICtrlEdit_SetReadOnly($txtABEnableAfter, False)
-		GUICtrlSetState($chkDBEnableAfter, $GUI_UNCHECKED)
-		_GUICtrlEdit_SetReadOnly($txtDBEnableAfter, True)
-	Else
-		_GUICtrlEdit_SetReadOnly($txtABEnableAfter, True)
-	EndIf
-EndFunc   ;==>chkABEnableAfter
+;Func chkABEnableAfterHero()
+;	If GUICtrlRead($chkABEnableAfterHero) = $GUI_CHECKED Then
+;		_GUICtrlEdit_SetReadOnly($txtABEnableAfter, False)
+;		GUICtrlSetState($chkDBEnableAfter, $GUI_UNCHECKED)
+;		_GUICtrlEdit_SetReadOnly($txtDBEnableAfter, True)
+;	Else
+;		_GUICtrlEdit_SetReadOnly($txtABEnableAfter, True)
+;	EndIf
+;EndFunc   ;==>chkABEnableAfter
 
 Func cmbABGoldElixirHero()
 	If _GUICtrlComboBox_GetCurSel($cmbABMeetGEHero) < 2 Then

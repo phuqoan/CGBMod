@@ -51,12 +51,12 @@
 			GUICtrlSetOnEvent(-1, "txtMinDark")
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetTip(-1, $txtTip)
-		GUICtrlCreateIcon ($LibDir & "\CGBBOT.dll", 32, $x + 400, $y + 6, 22, 22)		
+		GUICtrlCreateIcon ($LibDir & "\CGBBOT.dll", 32, $x + 400, $y + 6, 22, 22)
 		$lblDetectITBase = GUICtrlCreateLabel("Inferno Tower :", $x + 210 , $y + 6, -1, 17, $SS_LEFT)
 		$cmbDetectITBase = GUICtrlCreateCombo("", $x + 290, $y + 4, 105, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = "Select an action to be done when the bot detected Inferno Tower."
 			GUICtrlSetData(-1, "1:Dont Detect|2:Skip base|3:Attack", "1:Dont Detect")
-			GUICtrlSetOnEvent(-1, "cmbDetectITBase")			
+			GUICtrlSetOnEvent(-1, "cmbDetectITBase")
 			GUICtrlSetTip(-1, $txtTip)
 
 ;		$y +=22

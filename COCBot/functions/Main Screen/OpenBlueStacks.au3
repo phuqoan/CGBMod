@@ -74,6 +74,8 @@ Func waitMainScreenMini()
 			If CheckObstacles() Then $i = 0 ;See if there is anything in the way of mainscreen
 		Else
 			SetLog("CoC main window took " & Round(TimerDiff($hTimer) / 1000, 2) & " seconds", $COLOR_GREEN)
+			WinMove($Title, "", 10,10) ; MrPhu's modify
+			MouseMove(1,1) ;Avoid BS main screen (MrPhu's modify)
 			Return
 		EndIf
 		_StatusUpdateTime($hTimer)

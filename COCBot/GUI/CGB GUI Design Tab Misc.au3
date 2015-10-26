@@ -49,10 +49,9 @@ Local $x = 30, $y = 150
 		GUICtrlSetTip(-1, $txtTip)
 		GUICtrlSetOnEvent(-1, "btnConfirmRecSetting")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
-	
+
 	Local $x = 30, $y = 275
 	$grpMisc = GUICtrlCreateGroup("Rearm, Collect, Clear", $x -20, $y - 20 , 225, 100)
-	;$grpTraps = GUICtrlCreateGroup("Traps, X-bows && Infernos", $x -20, $y - 20 , 225, 55)
 		GUICtrlCreateIcon($pIconLib, $eIcnTrap, $x - 5, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnXbow, $x + 20, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnInferno, $x + 45, $y, 24, 24)
@@ -60,10 +59,8 @@ Local $x = 30, $y = 150
 			GUICtrlSetTip(-1, "Check this to automatically Rearm Traps, Reload Xbows and Infernos (if any) in your Village.")
 			GUICtrlSetOnEvent(-1, "chkTrap")
 			_ArrayConcatenate($G, $D)
-	;GUICtrlCreateGroup("", -99, -99, 1, 1)
+
 	$y += 25
-	;Local $x = 30, $y = 335
-	;$grpCollect = GUICtrlCreateGroup("Collecting Resources", $x - 20, $y - 20 , 225, 60)
 		GUICtrlCreateIcon($pIconLib, $eIcnMine, $x - 5, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 20, $y, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 45, $y, 24, 24)
@@ -71,13 +68,11 @@ Local $x = 30, $y = 150
 			$txtTip = "Check this to automatically collect the Village's Resources" & @CRLF & " from Gold Mines, Elixir Collectors and Dark Elixir Drills."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_CHECKED)
-	;GUICtrlCreateGroup("", -99, -99, 1, 1)
+
 	$y += 25
-	;Local $x = 30, $y = 400
-	;$grpTombstones = GUICtrlCreateGroup("Clear Tombstones", $x - 20, $y - 20 , 225, 55)
-		GUICtrlCreateIcon($pIconLib, $eIcnTombstone, $x + 20, $y, 24, 24)
-		$chkTombstones = GUICtrlCreateCheckbox("Clear Tombstones", $x + 75, $y + 2, -1, -1)
-			$txtTip = "Check this to automatically clear tombstones after enemy attack."
+		GUICtrlCreateIcon($pIconLib, $eIcnGem, $x + 20, $y, 24, 24)
+		$chkObstacles = GUICtrlCreateCheckbox("Clear Obstacles", $x + 75, $y + 2, -1, -1)	; MrPhu's modify
+			$txtTip = "Check this to automatically clear obstacles (gems, bushes, trees)."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
@@ -141,8 +136,8 @@ Local $x = 30, $y = 150
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	Local $x = 260, $y = 400
-	$grpVSDelay = GUICtrlCreateGroup("Village Search Delay ", $x - 20, $y - 20, 220, 55)
-		$txtTip = "Use this slider to change the time to wait between Next clicks when searching for a Village to Attack." & @CRLF & "This might compensate for Out of Sync errors on some PC's." & @CRLF & "NO GUARANTEES! This will not always have the same results!"
+	$grpVSDelay = GUICtrlCreateGroup("Village Search Delay (randomize) ", $x - 20, $y - 20, 220, 55) ; (MrPhu's modify)
+		$txtTip = "Use this slider to change the max time (randomize) to wait between Next clicks when searching for a Village to Attack." & @CRLF & "This might compensate for Out of Sync errors on some PC's." & @CRLF & "NO GUARANTEES! This will not always have the same results!"
 		$lblVSDelay = GUICtrlCreateLabel("0", $x, $y, 12, 15, $SS_RIGHT)
 			GUICtrlSetTip(-1, $txtTip)
 		$lbltxtVSDelay = GUICtrlCreateLabel("seconds", $x + 15, $y, 45, -1)

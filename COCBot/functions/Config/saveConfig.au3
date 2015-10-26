@@ -460,9 +460,9 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "advanced", "SmartLightSpell", "0")
     EndIf
 	 IniWrite($config, "advanced", "txtMinDark", GUICtrlRead($txtMinDark))
-	 
+
 	IniWrite($config, "advanced", "DetectITBase", _GUICtrlComboBox_GetCurSel($cmbDetectITBase))
-	
+
 	;	If GUICtrlRead($chkLightSpell) = $GUI_CHECKED Then
 	;		IniWrite($config, "advanced", "hitDElightning", 1)
 	;	Else
@@ -493,7 +493,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "advanced", "AttackTHType", _GUICtrlComboBox_GetCurSel($cmbAttackTHType))
     IniWrite($config, "advanced", "BottomTHType", _GUICtrlComboBox_GetCurSel($cmbAttackbottomType))
 	IniWrite($config, "advanced", "DetectTrapedTH", _GUICtrlComboBox_GetCurSel($cmbDetectTrapedTH))
-	
+
 	If GUICtrlRead($chkSpellNone) = $GUI_CHECKED Then
 		IniWrite($config, "advanced", "SpellNone",1)
 	Else
@@ -502,7 +502,7 @@ Func saveConfig() ;Saves the controls settings to the config
 
 	IniWrite($config, "advanced", "Spelltype", _GUICtrlComboBox_GetCurSel($cmbTHSpellType))
 
-	
+
 	If GUICtrlRead($chkAlertPBVillage) = $GUI_CHECKED Then
 		IniWrite($config, "advanced", "AlertPBVillage", 1)
 	Else
@@ -867,7 +867,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "other", "minrestartdark", GUICtrlRead($txtRestartDark ))
 
 	IniWrite($config, "other", "cmbRecSetting", _GUICtrlComboBox_GetCurSel($cmbRecSetting))
-	
+
 	If GUICtrlRead($chkTrap) = $GUI_CHECKED Then
 		IniWrite($config, "other", "chkTrap", 1)
 	Else
@@ -878,10 +878,10 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "other", "chkCollect", 0)
 	EndIf
-	If GUICtrlRead($chkTombstones) = $GUI_CHECKED Then
-		IniWrite($config, "other", "chkTombstones", 1)
+	If GUICtrlRead($chkObstacles) = $GUI_CHECKED Then
+		IniWrite($config, "other", "chkObstacles", 1)
 	Else
-		IniWrite($config, "other", "chkTombstones", 0)
+		IniWrite($config, "other", "chkObstacles", 0)
 	EndIf
 	IniWrite($config, "other", "txtTimeWakeUp", GUICtrlRead($txtTimeWakeUp))
 	IniWrite($config, "other", "VSDelay", GUICtrlRead($sldVSDelay))
@@ -936,7 +936,7 @@ Func saveConfig() ;Saves the controls settings to the config
 
 	IniWrite($building, "other", "xKingPos", $KingPos[0])
 	IniWrite($building, "other", "yKingPos", $KingPos[1])
-	
+
 	IniWrite($building, "other", "xQueenPos", $QueenPos[0])
 	IniWrite($building, "other", "yQueenPos", $QueenPos[1])
 
@@ -948,7 +948,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 	    IniWrite($building, "other", "UpKing", 0)
 	EndIf
-	 
+
 	If GUICtrlRead($chkUpgradeQueen) = $GUI_CHECKED Then ;==>upgradequeen
 	    IniWrite($building, "other", "UpQueen", 1)
 	Else

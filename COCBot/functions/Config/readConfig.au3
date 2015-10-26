@@ -212,9 +212,9 @@ Func readConfig() ;Reads config and sets it to the variables
 		$chkATH = IniRead($config, "advanced", "townhall", "0")
 		$ichkSmartLightSpell = IniRead($config, "advanced", "SmartLightSpell", "0")
 		$itxtMinDark = IniRead($config, "advanced", "txtMinDark", "1000")
-		
+
 		$icmbDetectITBase = IniRead($config, "advanced", "DetectITBase", "0")
-		
+
 		;$iChkLightSpell = IniRead($config, "advanced", "hitDElightning", "0")
 ;		$iLSpellQ = IniRead($config, "advanced", "QLSpell", "3")
 
@@ -228,10 +228,10 @@ Func readConfig() ;Reads config and sets it to the variables
 		$AttackTHType = IniRead($config, "advanced", "AttackTHType", "0")
         $BottomTHType = IniRead($config, "advanced", "BottomTHType", "0")
 		$icmbDetectTrapedTH = IniRead($config, "advanced", "DetectTrapedTH", "0")
-	
+
 		$optSpellNone = IniRead($config,"advanced","SpellNone","0")
 		$optSpellType = IniRead($config, "advanced", "Spelltype", "0")
-	
+
 		$PushToken = IniRead($config, "advanced", "AccountToken", "")
 
 		$iAlertPBVillage = IniRead($config, "advanced", "AlertPBVillage", "0")
@@ -447,7 +447,7 @@ Func readConfig() ;Reads config and sets it to the variables
 
 		$ichkTrap = IniRead($config, "other", "chkTrap", "0")
 		$iChkCollect = IniRead($config, "other", "chkCollect", "1")
-		$ichkTombstones = IniRead($config, "other", "chkTombstones", "0")
+		$ichkObstacles = IniRead($config, "other", "chkObstacles", "0")
 		$sTimeWakeUp = IniRead($config, "other", "txtTimeWakeUp", "0")
 		$iVSDelay = IniRead($config, "other", "VSDelay", "0")
 

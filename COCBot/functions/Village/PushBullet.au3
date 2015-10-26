@@ -19,6 +19,8 @@
 #include <String.au3>
 
 Func _RemoteControl()
+	If $pEnabled = 0 Or $pRemote = 0 Then Return
+
 	$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 	$access_token = $PushToken
 	Local $pushbulletApiUrl
@@ -38,7 +40,6 @@ Func _RemoteControl()
 		$pushLastModified = Number($modified[0]) ; modified date of the newest push that we received
 		$pushLastModified -= 120 ; back 120 seconds to avoid loss of messages
 	EndIf
-
 
 	Local $findstr = StringRegExp(StringUpper($Result), '"BODY":"BOT')
 	If $findstr = 1 Then
@@ -147,6 +148,8 @@ Func _RemoteControl()
 EndFunc   ;==>_RemoteControl
 
 Func _PushBullet($pMessage = "")
+	If $pEnabled = 0 Or $PushToken = "" Then Return
+
 	$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 	$access_token = $PushToken
 	$oHTTP.Open("Get", "https://api.pushbullet.com/v2/devices", False)
@@ -165,6 +168,8 @@ Func _PushBullet($pMessage = "")
 EndFunc   ;==>_PushBullet
 
 Func _Push($pMessage)
+	If $pEnabled = 0 Or $PushToken = "" Then Return
+
 	$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 	$access_token = $PushToken
 	$oHTTP.Open("Post", "https://api.pushbullet.com/v2/pushes", False)
@@ -175,6 +180,8 @@ Func _Push($pMessage)
 EndFunc   ;==>_Push
 
 Func _PushFile($File, $Folder, $FileType, $body)
+	If $pEnabled = 0 Or $PushToken = "" Then Return
+
 	If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
 		$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 		$access_token = $PushToken
@@ -214,7 +221,7 @@ EndFunc   ;==>_PushFile
 
 Func ReportPushBullet()
 	PushMsg("MyVillage")
-   checkMainScreen(False)
+	checkMainScreen(False)
 EndFunc   ;==>ReportPushBullet
 
 
@@ -228,6 +235,8 @@ Func _DeletePush($token)
 EndFunc   ;==>_DeletePush
 
 Func _DeleteMessage($iden)
+	If $pEnabled = 0 Or $PushToken = "" Then Return
+
 	$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
 	$access_token = $PushToken
 	$oHTTP.Open("Delete", "https://api.pushbullet.com/v2/pushes/" & $iden, False)
@@ -238,21 +247,23 @@ Func _DeleteMessage($iden)
 EndFunc   ;==>_DeleteMessage
 
 Func PushMsg($Message, $Source = "")
+	If $pEnabled = 0 Then Return
+
 	Local $hBitmap_Scaled
+	Local $Date = @YEAR & "-" & @MON & "-" & @MDAY ; MrPhu's modify
+	Local $Time = @HOUR & "." & @MIN
+
 	Switch $Message
-        Case "LastRaidTxt"
-            If $pEnabled = 1 And $iAlertPBLastRaidTxt = 1 Then _Push($iOrigPushB & " | Last Raid - [G]: " &  _NumberFormat(Round($lootGold / 1000)) & "K" & " [E]: " &  _NumberFormat(Round($lootElixir / 1000)) & "K" & " [D]: " &  _NumberFormat(Round($lootDarkElixir)) & "  [T]: " & Round($lootTrophies) & "  [S]: " & $SearchCount)
-        Case "Restarted"
-			If $pEnabled = 1 And $pRemote = 1 Then _Push($iOrigPushB & " | Bot restarted")
-		Case "OutOfSync"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | Restarted after Out of Sync Error" & "\n" & "Attacking now...")
-		Case "LastRaid"
-			If $pEnabled = 1 And $pLastRaidImg = 1 Then
+	  Case "LastRaidTxt"
+		 If $iAlertPBLastRaidTxt = 1 Then _Push($Time &" - " & $iOrigPushB & " - Last Raid - [S]"& _NumberFormat($SearchCount) &"\n[G]" & _NumberFormat(int($lootGold/1000)) & "k [E]" & _NumberFormat(int($lootElixir/1000)) & "k [DE]" & _NumberFormat($lootDarkElixir) & " [T]" & _NumberFormat($lootTrophies))
+	  Case "Restarted"
+		 If $pRemote = 1 Then _Push($iOrigPushB & " | Bot restarted")
+	  Case "OutOfSync"
+		 If $pOOS = 1 Then _Push($iOrigPushB & " | Restarted after Out of Sync Error" & "\n" & "Attacking now...")
+	  Case "LastRaid"
+		 If $pLastRaidImg = 1 Then
 				_CaptureRegion(0, 0, 860, 675)
 				;create a temporary file to send with pushbullet...
-				Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
-				Local $Time = @HOUR & "." & @MIN
-
 				If $ScreenshotLootInfo = 1 Then
 					$AttackFile = $Date & "__" & $Time & " G" & $lootGold & " E" & $lootElixir & " DE" & $lootDarkElixir & " T" & $lootTrophies & " S" & StringFormat("%s", $SearchCount) & ".jpg" ; separator __ is need  to not have conflict with saving other files if $TakeSS = 1 and $chkScreenshotLootInfo = 0
 				Else
@@ -270,40 +281,38 @@ Func PushMsg($Message, $Source = "")
 				If Not ($iDelete) Then SetLog("Pushbullet: An error occurred deleting temporary screenshot file.", $COLOR_RED)
 			EndIf
 		Case "MyVillage"
-			If $pEnabled = 1 AND $iAlertPBVillage = 1 Then _Push($iOrigPushB & " | My Village:" & "\n" & " [G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [D]: " & _NumberFormat($DarkCount) & "  [T]: " & _NumberFormat($TrophyCount) & " [FB]: " & _NumberFormat($FreeBuilder))
+			If $iAlertPBVillage = 1 Then _Push($iOrigPushB & " | My Village:" & "\n" & " [G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [D]: " & _NumberFormat($DarkCount) & "  [T]: " & _NumberFormat($TrophyCount) & " [FB]: " & _NumberFormat($FreeBuilder))
 		Case "FoundWalls"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Found Wall level " & $icmbWalls + 4 & "\n" & " Wall segment has been located...\nUpgrading ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Found Wall level " & $icmbWalls + 4 & "\n" & " Wall segment has been located...\nUpgrading ...")
 		Case "SkypWalls"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Cannot find Wall level " & $icmbWalls + 4 & "\n" & "Skip upgrade ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Cannot find Wall level " & $icmbWalls + 4 & "\n" & "Skip upgrade ...")
 		Case "AnotherDevice3600"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 1. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Floor($sTimeWakeUp / 60) / 60) & " hours " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 1. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Floor($sTimeWakeUp / 60) / 60) & " hours " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "AnotherDevice60"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 2. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 2. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "AnotherDevice"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 3. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 3. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "TakeBreak"
-			If $pEnabled = 1 And $pTakeAbreak = 1 Then _Push($iOrigPushB & " | Chief, we need some rest!" & "\n" & "Village must take a break..")
+			If $pTakeAbreak = 1 Then _Push($iOrigPushB & " | Chief, we need some rest!" & "\n" & "Village must take a break..")
 		Case "CocError"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | CoC Has Stopped Error .....")
+			If $pOOS = 1 Then _Push($iOrigPushB & " | CoC Has Stopped Error .....")
 		Case "Pause"
-			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Pause..." & "\n" & "Your request has been received. Bot is now paused")
+			If $pRemote = 1 And $Source = "Push" Then _Push($Time &" - " & $iOrigPushB & " | Request to Pause..." & "\n" & "Your request has been received. Bot is now paused")
 		Case "Resume"
-			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Resume..." & "\n" & "Your request has been received. Bot is now resumed")
+			If $pRemote = 1 And $Source = "Push" Then _Push($Time &" - " & $iOrigPushB & " | Request to Resume..." & "\n" & "Your request has been received. Bot is now resumed")
 		Case "OoSResources"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | Disconnected after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "Cannot locate Next button, Restarting Bot...")
+			If $pOOS = 1 Then _Push($iOrigPushB & " | Disconnected after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "Cannot locate Next button, Restarting Bot...")
 		Case "MatchFound"
-			If $pEnabled = 1 And $pMatchFound = 1 Then _Push($iOrigPushB & " | " & $sModeText[$iMatchMode] & " Match Found! after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy)
+			If $pMatchFound = 1 Then _Push($iOrigPushB & " | " & $sModeText[$iMatchMode] & " Match Found! after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy)
 		Case "UpgradeWithGold"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using GOLD" & "\n" & "Complete by using GOLD ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using GOLD" & "\n" & "Complete by using GOLD ...")
 		Case "UpgradeWithElixir"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using ELIXIR" & "\n" & "Complete by using ELIXIR ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using ELIXIR" & "\n" & "Complete by using ELIXIR ...")
 		Case "NoUpgradeWallButton"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Gold Button" & "\n" & "Cannot find gold upgrade button ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Gold Button" & "\n" & "Cannot find gold upgrade button ...")
 		Case "NoUpgradeElixirButton"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Elixir Button" & "\n" & "Cannot find elixir upgrade button ...")
+			If $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Elixir Button" & "\n" & "Cannot find elixir upgrade button ...")
 		Case "RequestScreenshot"
-			Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
-			Local $Time = @HOUR & "." & @MIN
 			_CaptureRegion(0, 0, 860, 720)
 			$hBitmap_Scaled = _GDIPlus_ImageResize($hBitmap, _GDIPlus_ImageGetWidth($hBitmap) / 2, _GDIPlus_ImageGetHeight($hBitmap) / 2) ;resize image
 			Local $Screnshotfilename = "Screenshot_" & $Date & "_" & $Time & ".jpg"
@@ -321,7 +330,7 @@ Func PushMsg($Message, $Source = "")
 			SetLog("PushBullet: All messages deleted.", $COLOR_GREEN)
 			$iDeleteAllPushesNow = False ; reset value
 		Case "CampFull"
-			If $pEnabled = 1 And $ichkAlertPBCampFull = 1 Then
+			If $ichkAlertPBCampFull = 1 Then
 				If $ichkAlertPBCampFullTest = 0 Then
 					_Push($iOrigPushB & " | Your Army Camps are now Full")
 					$ichkAlertPBCampFullTest = 1

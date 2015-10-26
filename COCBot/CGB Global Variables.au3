@@ -374,7 +374,7 @@ Global $itxtWallMinGold
 Global $itxtWallMinElixir
 Global $iVSDelay
 Global $isldTrainITDelay
-Global $ichkTrap, $iChkCollect, $ichkTombstones
+Global $ichkTrap, $iChkCollect, $ichkObstacles ; MrPhu removed TombStone clear
 Global $iCmbUnitDelay[$iModeCount], $iCmbWaveDelay[$iModeCount], $iChkRandomspeedatk[$iModeCount]
 Global $iTimeTroops = 0
 Global $iTimeGiant = 120
@@ -708,3 +708,6 @@ Global $iLTSpellCost, $LTSCost , $LTSpellCost
 Global $icmbDetectITBase
 Global $cmbDetectITBase
 Global $cITBase
+
+;Obstacle (MrPhu's modify)
+Global $ObsFolder = 0

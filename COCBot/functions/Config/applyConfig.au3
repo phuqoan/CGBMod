@@ -462,8 +462,8 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	EndIf
 	SmartLightSpell()
         GUICtrlSetData($txtMinDark, $itxtMinDark)
-		
-	_GUICtrlComboBox_SetCurSel($cmbDetectITBase, $icmbDetectITBase)		
+
+	_GUICtrlComboBox_SetCurSel($cmbDetectITBase, $icmbDetectITBase)
 
 	If $OptBullyMode = 1 Then
 		GUICtrlSetState($chkBullyMode, $GUI_CHECKED)
@@ -496,7 +496,7 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	Else
 		GUICtrlSetState($chkSpellNone, $GUI_UNCHECKED)
 	Endif
-	_GUICtrlComboBox_SetCurSel($cmbTHSpellType, $optSpellType)	
+	_GUICtrlComboBox_SetCurSel($cmbTHSpellType, $optSpellType)
 
 	If $iAlertPBVillage = 1 Then
 		GUICtrlSetState($chkAlertPBVillage, $GUI_CHECKED)
@@ -1113,10 +1113,10 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkCollect, $GUI_UNCHECKED)
 	EndIf
 
-	If $ichkTombstones = 1 Then
-		GUICtrlSetState($chkTombstones, $GUI_CHECKED)
+	If $ichkObstacles = 1 Then
+		GUICtrlSetState($chkObstacles, $GUI_CHECKED)
 	Else
-		GUICtrlSetState($chkTombstones, $GUI_UNCHECKED)
+		GUICtrlSetState($chkObstacles, $GUI_UNCHECKED)
 	EndIf
 
 	GUICtrlSetData($txtTimeWakeUp, $sTimeWakeUp)
@@ -1126,8 +1126,8 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 
 	GUICtrlSetData($txtMaxTrophy, $itxtMaxTrophy)
 	GUICtrlSetData($txtdropTrophy, $itxtdropTrophy)
-	
-	_GUICtrlComboBox_SetCurSel($cmbRecSetting, $icmbRecSetting)	
+
+	_GUICtrlComboBox_SetCurSel($cmbRecSetting, $icmbRecSetting)
 
 	If $iChkTrophyHeroes = 1 Then
 		GUICtrlSetState($chkTrophyHeroes, $GUI_CHECKED)

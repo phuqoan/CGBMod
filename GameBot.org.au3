@@ -23,7 +23,7 @@
 #pragma compile(FileVersion, 4.1.1 Modded)
 #pragma compile(LegalCopyright, ?http://gamebot.org)
 
-$sBotVersion = "v4.1.1 Modded"
+$sBotVersion = "v4.1.1 #10" ; (MrPhu's modify)
 $sBotTitle = "Clash Game Bot " & $sBotVersion
 Global $sBotDll = @ScriptDir & "\CGBPlugin.dll"
 
@@ -38,10 +38,10 @@ If @AutoItX64 = 1 Then
 	Exit
 EndIf
 
-If Not FileExists(@ScriptDir & "\License.txt") Then
-	$license = InetGet("http://www.gnu.org/licenses/gpl-3.0.txt", @ScriptDir & "\License.txt")
-	InetClose($license)
-EndIf
+;If Not FileExists(@ScriptDir & "\License.txt") Then
+;	$license = InetGet("http://www.gnu.org/licenses/gpl-3.0.txt", @ScriptDir & "\License.txt")
+;	InetClose($license)
+;EndIf
 
 #include "COCBot\CGB Global Variables.au3"
 #include "COCBot\CGB GUI Design.au3"
@@ -133,7 +133,7 @@ Func runBot() ;Bot that runs everything in order
 			Collect()
 				If _Sleep($iDelayRunBot1) Then Return
 				If $Restart = True Then ContinueLoop
-			CheckTombs()
+			;CheckTombs()	; MrPhu's modify
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			ReArm()
@@ -186,7 +186,10 @@ Func runBot() ;Bot that runs everything in order
 					checkMainScreen(False)  ; required here due to many possible exits
 					If $Restart = True Then ContinueLoop
 			EndIf
+
 			UpgradeWall()
+			ClearObstacles()	; MrPhu's modify
+
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			Idle()
@@ -304,25 +307,21 @@ Func AttackMain() ;Main control for attack functions
 		checkMainScreen(False)
 		If $Restart = True Then Return
 	EndIf
-	PrepareSearch()
-		If $OutOfGold = 1  Then Return ; Check flag for enough gold to search
-		If $Restart = True Then Return
-	VillageSearch()
-		If $OutOfGold = 1  Then Return ; Check flag for enough gold to search
-		If $Restart = True Then Return
-	PrepareAttack($iMatchMode)
-		If $Restart = True Then Return
-	;checkDarkElix()
-	;DEAttack()
-		If $Restart = True Then Return
-	Attack()
-		If $Restart = True Then Return
-	ReturnHome($TakeLootSnapShot)
-		If _Sleep($iDelayAttackMain2) Then Return
-	Return True
-EndFunc   ;==>AttackMain
 
-Func Attack() ;Selects which algorithm
-	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
-	algorithm_AllTroops()
-EndFunc   ;==>Attack
+   PrepareSearch()
+   If $OutOfGold = 1  Then Return ; Check flag for enough gold to search
+   If $Restart = True Then Return
+   VillageSearch()
+   If $OutOfGold = 1  Then Return ; Check flag for enough gold to search
+   If $Restart = True Then Return
+   PrepareAttack($iMatchMode)
+   If $Restart = True Then Return
+
+   SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
+   algorithm_AllTroops()
+
+   If $Restart = True Then Return
+   ReturnHome($TakeLootSnapShot)
+   If _Sleep($iDelayAttackMain2) Then Return
+   Return True
+EndFunc   ;==>AttackMain

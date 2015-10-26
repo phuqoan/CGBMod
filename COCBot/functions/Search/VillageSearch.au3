@@ -125,9 +125,9 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	EndIf
 
 	While 1
-        SearchCost()	
+        SearchCost()
 		If $iVSDelay > 0 Then
-			If _Sleep(1000 * $iVSDelay) Then Return
+			If _Sleep(1000 * Random(0,$iVSDelay)) Then Return  ; Randomize delay to avoid SPC Bot Detected (MrPhu's modify)
 		EndIf
 
 		Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
@@ -178,7 +178,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				EndIf
 			EndIf
 		Next
-	
+
 		If $match[$DB] Or $match[$LB] Then
 			$dbBase = checkDeadBase()
 		EndIf
@@ -186,7 +186,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		If $match[$LB] Then
 			$cITBase = checkITBase()
 		EndIf
-		
+
 		If $match[$DB] And $dbBase Then
 			SetLog(_PadStringCenter(" Dead Base Found! ", 50, "~"), $COLOR_GREEN)
 			$iMatchMode = $DB
@@ -208,8 +208,8 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				SetLog(_PadStringCenter(" DE Side Base Found! ", 50, "~"), $COLOR_GREEN)
 				$iMatchMode = $LB
 				$DESideFound = True
-				ExitLoop		
-			Else 
+				ExitLoop
+			Else
 				SetLog(_PadStringCenter(" Live Base Found! ", 50, "~"), $COLOR_GREEN)
 				$iMatchMode = $LB
 				ExitLoop
@@ -231,7 +231,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				ExitLoop
 			EndIf
 		EndIf
-		
+
 		If $match[$DB] And Not $dbBase Then
 			$noMatchTxt &= ", Not a " & $sModeText[$DB]
 			If $debugDeadBaseImage = 1 Then
@@ -318,7 +318,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 	 EndIf
 
 	SetLog(_PadStringCenter(" Search Complete ", 50, "="), $COLOR_BLUE)
-		
+
 	PushMsg("MatchFound")
 
 	; TH Detection Check Once Conditions
